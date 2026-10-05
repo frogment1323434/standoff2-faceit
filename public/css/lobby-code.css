@@ -1,0 +1,166 @@
+/* ============================================================
+   БЛОК С КОДОМ ЛОББИ
+   ============================================================ */
+.lobby-code-block {
+  background: linear-gradient(135deg, rgba(255, 85, 0, 0.1), rgba(255, 170, 0, 0.05));
+  border: 1px solid rgba(255, 85, 0, 0.3);
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 24px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  animation: blockIn 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes blockIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.lobby-code-block::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--accent), var(--accent-2), transparent);
+  animation: shimmer 3s infinite;
+}
+
+@keyframes shimmer {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+.lobby-code-label {
+  font-size: 0.75rem;
+  letter-spacing: 3px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.lobby-code-value {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 2.5rem;
+  font-weight: 900;
+  letter-spacing: 6px;
+  background: linear-gradient(135deg, #fff, var(--accent-2), var(--accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 40px rgba(255, 85, 0, 0.5);
+  margin: 10px 0;
+  user-select: all;
+  cursor: pointer;
+  transition: filter 0.3s;
+}
+
+.lobby-code-value:hover { filter: brightness(1.2); }
+
+.lobby-code-hint {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-top: 10px;
+}
+
+.lobby-code-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 18px;
+  flex-wrap: wrap;
+}
+
+/* ============================================================
+   ПРИСОЕДИНЕНИЕ ПО КОДУ
+   ============================================================ */
+.join-code-block {
+  background: var(--bg-card);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 20px;
+  transition: all 0.3s;
+}
+
+.join-code-block:hover {
+  border-color: var(--border-bright);
+  box-shadow: var(--shadow-md);
+}
+
+.join-code-form {
+  display: flex;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.join-code-form input {
+  flex: 1;
+  margin-bottom: 0;
+  font-family: 'Orbitron', sans-serif;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  text-align: center;
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.join-code-form input::placeholder {
+  letter-spacing: 2px;
+  font-weight: 500;
+}
+
+/* ============================================================
+   СПИСОК ИГРОКОВ В ЛОББИ
+   ============================================================ */
+.lobby-code-players-list {
+  display: grid;
+  gap: 8px;
+  margin-top: 20px;
+  max-height: 300px;
+  overflow-y: auto;
+  padding-right: 8px;
+}
+
+.lobby-code-players-list::-webkit-scrollbar { width: 6px; }
+.lobby-code-players-list::-webkit-scrollbar-thumb {
+  background: var(--accent);
+  border-radius: 3px;
+}
+
+.lobby-code-player {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  background: rgba(0, 0, 0, 0.25);
+  border-radius: 10px;
+  border-left: 3px solid var(--border);
+  transition: all 0.2s;
+}
+
+.lobby-code-player.ready {
+  border-left-color: var(--green);
+  background: rgba(0, 255, 157, 0.05);
+}
+
+.lc-avatar {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 900; font-size: 0.85rem;
+  color: #0a0a0a;
+}
+
+.lc-name { flex: 1; font-weight: 700; }
+.lc-elo { color: var(--text-muted); font-size: 0.85rem; font-family: 'Orbitron', sans-serif; }
+.lc-status { font-size: 1.1rem; }
+
+@media (max-width: 768px) {
+  .lobby-code-value { font-size: 1.8rem; letter-spacing: 4px; }
+  .join-code-form { flex-direction: column; }
+}

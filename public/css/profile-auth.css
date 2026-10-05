@@ -1,0 +1,178 @@
+/* ============================================================
+   ФОРМА ВХОДА В ПРОФИЛЕ
+   ============================================================ */
+.profile-auth-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px 0;
+}
+
+.profile-auth-card {
+  background: rgba(20, 30, 48, 0.75);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
+  padding: 36px 32px;
+  max-width: 460px;
+  width: 100%;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  position: relative;
+  overflow: hidden;
+  animation: profileAuthIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.profile-auth-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--accent), var(--accent-2), transparent);
+  animation: shimmer 3s infinite;
+}
+
+@keyframes shimmer {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+@keyframes profileAuthIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.profile-auth-logo {
+  font-size: 2.5rem;
+  text-align: center;
+  filter: drop-shadow(0 0 20px var(--accent));
+  animation: logoPulse 3s infinite;
+  margin-bottom: 16px;
+}
+
+@keyframes logoPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.08); }
+}
+
+.profile-auth-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.3rem;
+  font-weight: 800;
+  text-align: center;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  background: linear-gradient(135deg, #fff, var(--accent-2), var(--accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 6px;
+}
+
+.profile-auth-sub {
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  margin-bottom: 24px;
+}
+
+.profile-auth-tabs {
+  display: flex;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 12px;
+  padding: 5px;
+  margin-bottom: 22px;
+}
+
+.profile-auth-tab {
+  flex: 1;
+  padding: 11px;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  font-family: 'Rajdhani', sans-serif;
+  font-weight: 700;
+  font-size: 0.85rem;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: all 0.25s;
+}
+
+.profile-auth-tab.active {
+  color: white;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  box-shadow: 0 4px 15px var(--accent-glow);
+}
+
+.profile-auth-tab:not(.active):hover { color: var(--text); }
+
+.profile-auth-form { animation: formIn 0.3s; }
+
+@keyframes formIn {
+  from { opacity: 0; transform: translateX(10px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.profile-auth-form .form-group { margin-bottom: 16px; }
+
+.profile-auth-form input {
+  width: 100%;
+  padding: 13px 16px;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  color: white;
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: all 0.2s;
+  margin: 0;
+}
+
+.profile-auth-form input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(255, 85, 0, 0.15);
+}
+
+.form-error {
+  color: var(--red);
+  font-size: 0.85rem;
+  font-weight: 600;
+  min-height: 20px;
+  margin-bottom: 14px;
+  text-align: center;
+}
+
+.form-error:not(:empty) {
+  padding: 10px;
+  background: rgba(255, 45, 85, 0.1);
+  border-radius: 8px;
+  border-left: 3px solid var(--red);
+  animation: shake 0.4s;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-6px); }
+  75% { transform: translateX(6px); }
+}
+
+/* Строки статистики */
+.stat-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.95rem;
+}
+
+.stat-row:last-child { border-bottom: none; }
+.stat-row span:last-child { color: var(--accent-2); font-weight: bold; }
+
+@media (max-width: 480px) {
+  .profile-auth-card { padding: 28px 20px; }
+  .profile-auth-logo { font-size: 2rem; }
+  .profile-auth-title { font-size: 1.1rem; }
+}

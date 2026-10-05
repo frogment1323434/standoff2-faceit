@@ -1,0 +1,246 @@
+/* ============================================================
+   PWA — баннеры установки и обновления
+   ============================================================ */
+
+/* ============================================================
+   БАННЕР УСТАНОВКИ
+   ============================================================ */
+.install-banner {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%) translateY(200px);
+  background: linear-gradient(135deg, rgba(20, 30, 48, 0.98), rgba(15, 22, 35, 0.98));
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 2px solid var(--accent);
+  border-radius: 16px;
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.7),
+    0 0 40px rgba(255, 85, 0, 0.3);
+  z-index: 9999;
+  max-width: 520px;
+  width: calc(100% - 40px);
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.install-banner.show {
+  transform: translateX(-50%) translateY(0);
+}
+
+.install-banner-icon {
+  font-size: 2.2rem;
+  filter: drop-shadow(0 0 15px var(--accent));
+  animation: iconFloat 2s ease-in-out infinite;
+  flex-shrink: 0;
+}
+
+@keyframes iconFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+.install-banner-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.install-banner-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: var(--text);
+  letter-spacing: 0.5px;
+  margin-bottom: 2px;
+}
+
+.install-banner-sub {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  letter-spacing: 0.3px;
+}
+
+.install-banner-btn {
+  padding: 10px 18px;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  color: #0a0a0a;
+  border: none;
+  border-radius: 10px;
+  font-family: 'Rajdhani', sans-serif;
+  font-weight: 900;
+  font-size: 0.82rem;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.25s;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.install-banner-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px var(--accent-glow);
+}
+
+.install-banner-close {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.install-banner-close:hover {
+  background: rgba(255, 45, 85, 0.15);
+  border-color: var(--red);
+  color: var(--red);
+}
+
+/* ============================================================
+   БАННЕР ОБНОВЛЕНИЯ
+   ============================================================ */
+.update-banner {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%) translateY(200px);
+  background: linear-gradient(135deg, rgba(0, 212, 255, 0.15), rgba(0, 150, 200, 0.1));
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 2px solid var(--cyan);
+  border-radius: 16px;
+  padding: 14px 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.7),
+    0 0 40px rgba(0, 212, 255, 0.3);
+  z-index: 9999;
+  max-width: 480px;
+  width: calc(100% - 40px);
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.update-banner.show {
+  transform: translateX(-50%) translateY(0);
+}
+
+.update-banner-icon {
+  font-size: 1.8rem;
+  animation: rotate 2s linear infinite;
+  flex-shrink: 0;
+}
+
+@keyframes rotate {
+  to { transform: rotate(360deg); }
+}
+
+.update-banner-content {
+  flex: 1;
+}
+
+.update-banner-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 800;
+  color: var(--cyan);
+  margin-bottom: 2px;
+}
+
+.update-banner-sub {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+.update-banner-btn {
+  padding: 10px 18px;
+  background: linear-gradient(135deg, var(--cyan), #0066a0);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-family: 'Rajdhani', sans-serif;
+  font-weight: 900;
+  font-size: 0.82rem;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.25s;
+  white-space: nowrap;
+}
+
+.update-banner-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px var(--cyan-glow);
+}
+
+/* ============================================================
+   STANDALONE-РЕЖИМ (приложение установлено)
+   ============================================================ */
+body.running-as-app {
+  /* Убираем выделение текста при долгом тапе */
+  -webkit-user-select: none;
+  user-select: none;
+
+  /* Отключаем «pull to refresh» в шапке */
+  overscroll-behavior-y: none;
+}
+
+body.running-as-app input,
+body.running-as-app textarea {
+  /* Но в полях ввода выделение разрешаем */
+  -webkit-user-select: text;
+  user-select: text;
+}
+
+/* ============================================================
+   АДАПТИВ
+   ============================================================ */
+@media (max-width: 480px) {
+  .install-banner,
+  .update-banner {
+    bottom: 12px;
+    left: 12px;
+    right: 12px;
+    transform: translateY(200px);
+    width: auto;
+    padding: 14px 16px;
+    gap: 10px;
+  }
+
+  .install-banner.show,
+  .update-banner.show {
+    transform: translateY(0);
+  }
+
+  .install-banner-icon,
+  .update-banner-icon {
+    font-size: 1.8rem;
+  }
+
+  .install-banner-title {
+    font-size: 0.85rem;
+  }
+
+  .install-banner-sub {
+    display: none;
+  }
+
+  .install-banner-btn,
+  .update-banner-btn {
+    padding: 8px 14px;
+    font-size: 0.75rem;
+  }
+}

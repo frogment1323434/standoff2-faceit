@@ -1,0 +1,19 @@
+{
+  "name": "standoff2-faceit-server",
+  "version": "1.0.0",
+  "description": "Backend для Standoff 2 Faceit",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": "20.x"
+  },
+  "dependencies": {
+    "better-sqlite3": "^12.9.0",
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
+    "jsonwebtoken": "^9.0.2"
+  }
+}

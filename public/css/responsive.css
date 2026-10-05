@@ -1,0 +1,96 @@
+/* ============================================================
+   АДАПТИВНОСТЬ
+   ============================================================ */
+
+@media (max-width: 1024px) {
+  .grid-2 { grid-template-columns: 1fr; }
+  .lobby-players { grid-template-columns: 1fr; }
+  .vs-divider { padding: 10px 0; }
+  .stats-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 768px) {
+  .hud-header {
+    padding: 12px 16px;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .header-center { display: none; }
+  .user-stats { display: none; }
+  .user-name { font-size: 0.9rem; }
+
+  .hud-nav {
+    padding: 0 16px;
+    gap: 0;
+  }
+
+  .tab {
+    padding: 14px 14px;
+    font-size: 0.72rem;
+    gap: 6px;
+  }
+
+  .tab-text { display: none; }
+  .tab-icon { font-size: 1.3rem; }
+
+  .container { padding: 16px; }
+
+  .page-header h1 { font-size: 1.5rem; }
+  .page-subtitle { font-size: 0.85rem; }
+
+  .stat-value { font-size: 1.5rem; }
+  .stat-icon { font-size: 1.8rem; }
+
+  .stats-grid { grid-template-columns: 1fr; }
+
+  .grid-3 { grid-template-columns: 1fr; }
+
+  .lb-table th, .lb-table td {
+    padding: 10px 8px;
+    font-size: 0.8rem;
+  }
+
+  .lb-table th:nth-child(5),
+  .lb-table td:nth-child(5),
+  .lb-table th:nth-child(6),
+  .lb-table td:nth-child(6) {
+    display: none;
+  }
+
+  .notifications {
+    top: 70px;
+    left: 10px;
+    right: 10px;
+  }
+
+  .notification { min-width: auto; }
+
+  .card { padding: 20px; }
+
+  .btn { padding: 11px 20px; font-size: 0.85rem; }
+  .btn-lg { padding: 14px 24px; }
+
+  .mm-visual { width: 140px; height: 140px; }
+  .mm-center { inset: 46px; }
+
+  .modal { padding: 24px 18px; }
+}
+
+@media (max-width: 480px) {
+  .user-avatar { width: 40px; height: 40px; font-size: 1rem; }
+  .logo-main { font-size: 0.95rem; letter-spacing: 2px; }
+  .logo-sub { font-size: 0.55rem; letter-spacing: 2px; }
+  .logo-icon { font-size: 1.8rem; }
+
+  .page-header h1 { font-size: 1.3rem; }
+
+  .mm-visual { width: 120px; height: 120px; }
+  .mm-icon { font-size: 1.5rem; }
+
+  .vs-text { font-size: 1.1rem; }
+
+  .rank-item { padding: 12px 14px; }
+  .rank-name { font-size: 0.85rem; }
+  .rank-elo { font-size: 0.7rem; }
+}

@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>Standoff 2 — Faceit</title>
+
+<!-- ============================================================
+     PWA МЕТА-ТЕГИ
+     ============================================================ -->
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#ff5500">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="SO2 Faceit">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="application-name" content="Standoff 2 Faceit">
+<meta name="description" content="Киберспортивная платформа Standoff 2 — рейтинговые матчи, Elo, ранги">
+<meta name="format-detection" content="telephone=no">
+<meta name="msapplication-TileColor" content="#ff5500">
+<meta name="msapplication-tap-highlight" content="no">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<link rel="apple-touch-icon" sizes="152x152" href="icons/icon-152.png">
+<link rel="apple-touch-icon" sizes="180x180" href="icons/icon-192.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+<link rel="icon" type="image/png" sizes="512x512" href="icons/icon-512.png">
+<link rel="icon" type="image/png" sizes="32x32" href="icons/icon-96.png">
+<link rel="shortcut icon" href="icons/icon-192.png">
+
+<!-- ============================================================
+     ШРИФТЫ
+     ============================================================ -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Orbitron:wght@600;800;900&display=swap" rel="stylesheet">
+
+<!-- ============================================================
+     СТИЛИ
+     ============================================================ -->
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/hud.css">
+<link rel="stylesheet" href="css/modal.css">
+<link rel="stylesheet" href="css/responsive.css">
+<link rel="stylesheet" href="css/profile-auth.css">
+<link rel="stylesheet" href="css/auth-modal.css">
+<link rel="stylesheet" href="css/voting.css">
+<link rel="stylesheet" href="css/map-room.css">
+<link rel="stylesheet" href="css/screenshot.css">
+<link rel="stylesheet" href="css/matchmaking.css">
+<link rel="stylesheet" href="css/pwa.css">
+</head>
+<body>
+
+<!-- ===== ФОНОВЫЕ ЭФФЕКТЫ ===== -->
+<div class="bg-grid"></div>
+<div class="bg-glow bg-glow-1"></div>
+<div class="bg-glow bg-glow-2"></div>
+<div class="bg-glow bg-glow-3"></div>
+
+<!-- ===== HEADER ===== -->
+<header class="hud-header">
+  <div class="logo-wrap">
+    <div class="logo-icon">⚔️</div>
+    <div class="logo-text">
+      <span class="logo-main">STANDOFF 2</span>
+      <span class="logo-sub">FACEIT PLATFORM</span>
+    </div>
+  </div>
+
+  <div class="header-center">
+    <div class="status-indicator">
+      <span class="status-dot"></span>
+      <span>ONLINE</span>
+    </div>
+    <div class="online-count">
+      <span>👥</span>
+      <span id="onlineCount">—</span>
+    </div>
+  </div>
+
+  <div class="user-info">
+    <div class="user-stats">
+      <div class="user-rank-icon" id="headerRankIcon">🥇</div>
+      <div>
+        <div class="user-name" id="userName">Гость</div>
+        <div class="user-elo">
+          <span class="elo-value" id="userElo">—</span>
+          <span class="elo-label">ELO</span>
+        </div>
+      </div>
+    </div>
+    <div class="user-avatar" id="userAvatar">?</div>
+    <button class="btn-icon" onclick="logout()" title="Выйти">⏻</button>
+  </div>
+</header>
+
+<!-- ===== NAV ===== -->
+<nav class="hud-nav">
+  <div class="tab active" data-page="home">
+    <span class="tab-icon">🏠</span>
+    <span class="tab-text">Главная</span>
+  </div>
+  <div class="tab" data-page="play">
+    <span class="tab-icon">🎮</span>
+    <span class="tab-text">Играть</span>
+    <span class="tab-badge">LIVE</span>
+  </div>
+  <div class="tab" data-page="lobby">
+    <span class="tab-icon">🎯</span>
+    <span class="tab-text">Лобби</span>
+  </div>
+  <div class="tab" data-page="leaderboard">
+    <span class="tab-icon">🏆</span>
+    <span class="tab-text">Лидерборд</span>
+  </div>
+  <div class="tab" data-page="ranks">
+    <span class="tab-icon">📊</span>
+    <span class="tab-text">Ранги</span>
+  </div>
+  <div class="tab" data-page="profile">
+    <span class="tab-icon">👤</span>
+    <span class="tab-text">Профиль</span>
+  </div>
+</nav>
+
+<div class="notifications" id="notifications"></div>
+
+<div class="modal-overlay" id="modal">
+  <div class="modal" id="modalContent"></div>
+</div>
+
+<div class="container">
+
+  <!-- ===== HOME ===== -->
+  <div class="page active" id="page-home">
+    <div class="page-header">
+      <h1>Добро пожаловать, <span class="accent-text" id="welcomeName">Гость</span></h1>
+      <p class="page-subtitle">Твой прогресс и статистика</p>
+    </div>
+
+    <div class="stats-grid">
+      <div class="stat-card stat-elo">
+        <div class="stat-icon">⚡</div>
+        <div class="stat-content">
+          <div class="stat-value" id="statElo">—</div>
+          <div class="stat-label">ТЕКУЩИЙ ELO</div>
+        </div>
+        <div class="stat-progress"><div class="stat-progress-fill" id="eloProgress"></div></div>
+      </div>
+
+      <div class="stat-card stat-rank">
+        <div class="stat-icon" id="homeRankIcon">🥈</div>
+        <div class="stat-content">
+          <div class="stat-value" id="statRank">Не авторизован</div>
+          <div class="stat-label">ТЕКУЩИЙ РАНГ</div>
+        </div>
+      </div>
+
+      <div class="stat-card stat-winrate">
+        <div class="stat-icon">📈</div>
+        <div class="stat-content">
+          <div class="stat-value" id="statWinrate">0%</div>
+          <div class="stat-label">WINRATE</div>
+        </div>
+      </div>
+
+      <div class="stat-card stat-matches">
+        <div class="stat-icon">🎯</div>
+        <div class="stat-content">
+          <div class="stat-value" id="statMatches">0</div>
+          <div class="stat-label">МАТЧЕЙ</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <div class="card card-chart">
+        <div class="card-header">
+          <div class="card-title">
+            <span class="title-icon">📈</span>
+            Динамика Elo
+          </div>
+          <div class="chart-legend">
+            <span class="legend-dot"></span>
+            <span>Последние матчи</span>
+          </div>
+        </div>
+        <div id="eloChart" class="chart"></div>
+      </div>
+
+      <div class="card card-quick">
+        <div class="card-header">
+          <div class="card-title">
+            <span class="title-icon">⚡</span>
+            Быстрый старт
+          </div>
+        </div>
+        <button class="btn btn-primary btn-block btn-pulse" onclick="switchPage('play')">
+          <span class="btn-icon-inner">🎮</span> НАЙТИ МАТЧ
+        </button>
+        <button class="btn btn-ghost btn-block" onclick="switchPage('leaderboard')" style="margin-top:12px;">
+          <span class="btn-icon-inner">🏆</span> ЛИДЕРБОРД
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== PLAY ===== -->
+  <div class="page" id="page-play">
+    <div class="page-header">
+      <h1>🎮 Поиск матча</h1>
+      <p class="page-subtitle">Глобальный матчмейкинг по Elo (±200)</p>
+    </div>
+
+    <div class="grid-2">
+      <div class="card card-matchmaking">
+        <div class="mm-visual">
+          <div class="mm-ring ring-outer"></div>
+          <div class="mm-ring ring-middle"></div>
+          <div class="mm-ring ring-inner"></div>
+          <div class="mm-center">
+            <div class="mm-icon" id="mmIcon">🔍</div>
+          </div>
+        </div>
+        <div class="mm-status" id="mmStatus">Готов к поиску</div>
+        <div class="mm-hint">Поиск соперника с похожим Elo (разница до ±200)</div>
+        <button class="btn btn-primary btn-block btn-lg" id="mmButton" onclick="toggleMatchmaking()">
+          🔍 НАЙТИ МАТЧ
+        </button>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title"><span class="title-icon">ℹ️</span> Параметры</div>
+        </div>
+        <div class="info-list">
+          <div class="info-row">
+            <span class="info-label">Режим</span>
+            <span class="info-value">1 vs 1 Рейтинг</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">Твой Elo</span>
+            <span class="info-value accent" id="playElo">—</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">Диапазон</span>
+            <span class="info-value">±200 Elo</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">K-Factor</span>
+            <span class="info-value">32</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">Сервер</span>
+            <span class="info-value">Auto</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== LOBBY ===== -->
+  <div class="page" id="page-lobby">
+    <div class="page-header">
+      <h1>🎯 Лобби матча</h1>
+      <p class="page-subtitle" id="lobbyTitle">Ожидание игроков...</p>
+    </div>
+
+    <div class="card">
+      <div class="lobby-top">
+        <div class="lobby-ready-count">
+          <span class="ready-dot"></span>
+          <span id="readyCount">0 / 2 готовы</span>
+        </div>
+        <div class="lobby-timer-wrap">
+          <div class="timer-icon">⚔️</div>
+          <div class="timer-value">VS</div>
+          <div class="timer-label">МАТЧ</div>
+        </div>
+      </div>
+
+      <div class="lobby-players">
+        <div class="team team-t">
+          <div class="team-header">
+            <div class="team-icon team-icon-t">💣</div>
+            <div class="team-info">
+              <h3>ТЕРРОРИСТЫ</h3>
+              <span class="team-sub">TERRORISTS</span>
+            </div>
+            <span class="team-avg" id="team1Avg">~1500</span>
+          </div>
+          <div id="team1"></div>
+        </div>
+
+        <div class="vs-divider">
+          <div class="vs-text">VS</div>
+          <div class="vs-round">MATCH</div>
+        </div>
+
+        <div class="team team-ct">
+          <div class="team-header">
+            <div class="team-icon team-icon-ct">🛡</div>
+            <div class="team-info">
+              <h3>СПЕЦНАЗ</h3>
+              <span class="team-sub">COUNTER-TERRORISTS</span>
+            </div>
+            <span class="team-avg" id="team2Avg">~1500</span>
+          </div>
+          <div id="team2"></div>
+        </div>
+      </div>
+
+      <div class="lobby-actions">
+        <button class="btn btn-danger btn-block btn-lg" onclick="leaveLobby()">
+          <span class="btn-icon-inner">❌</span> ПОКИНУТЬ МАТЧ
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== LEADERBOARD ===== -->
+  <div class="page" id="page-leaderboard">
+    <div class="page-header">
+      <h1>🏆 Лидерборд</h1>
+      <p class="page-subtitle">Топ игроков сезона</p>
+    </div>
+
+    <div class="card">
+      <table class="lb-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Игрок</th>
+            <th>Ранг</th>
+            <th>Elo</th>
+            <th>Матчи</th>
+            <th>Winrate</th>
+          </tr>
+        </thead>
+        <tbody id="leaderboardBody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ===== RANKS ===== -->
+  <div class="page" id="page-ranks">
+    <div class="page-header">
+      <h1>📊 Система рангов</h1>
+      <p class="page-subtitle">18 уровней от Серебра до Топ-500</p>
+    </div>
+
+    <div class="card">
+      <div id="ranksList" class="ranks-grid"></div>
+    </div>
+  </div>
+
+  <!-- ===== PROFILE ===== -->
+  <div class="page" id="page-profile">
+    <div class="page-header">
+      <h1>👤 Профиль</h1>
+      <p class="page-subtitle">Вход и статистика</p>
+    </div>
+
+    <div id="profileContainer"></div>
+  </div>
+
+</div>
+
+<!-- ===== МОДАЛЬНОЕ ОКНО ВХОДА ===== -->
+<div class="auth-modal-overlay" id="authModalOverlay">
+  <div class="auth-modal">
+    <button class="auth-modal-close" type="button">✕</button>
+    <div class="auth-modal-logo">⚔️</div>
+    <div class="auth-modal-title">ВХОД В АККАУНТ</div>
+    <div class="auth-modal-sub">Войди, чтобы играть и сохранять прогресс</div>
+
+    <div class="auth-modal-tabs">
+      <button class="auth-modal-tab active" data-tab="login" type="button">ВХОД</button>
+      <button class="auth-modal-tab" data-tab="register" type="button">РЕГИСТРАЦИЯ</button>
+    </div>
+
+    <form class="auth-modal-form" id="authModalLoginForm">
+      <div class="form-group">
+        <label>Никнейм</label>
+        <input type="text" id="authModalLoginNick" placeholder="Введите ник" autocomplete="username">
+      </div>
+      <div class="form-group">
+        <label>Пароль</label>
+        <input type="password" id="authModalLoginPass" placeholder="Введите пароль" autocomplete="current-password">
+      </div>
+      <div class="auth-modal-error" id="authModalLoginError"></div>
+      <button type="submit" class="btn btn-primary btn-block">🔓 ВОЙТИ</button>
+    </form>
+
+    <form class="auth-modal-form hidden" id="authModalRegForm">
+      <div class="form-group">
+        <label>Никнейм</label>
+        <input type="text" id="authModalRegNick" placeholder="3-20 символов" autocomplete="username">
+      </div>
+      <div class="form-group">
+        <label>Пароль</label>
+        <input type="password" id="authModalRegPass" placeholder="Минимум 4 символа" autocomplete="new-password">
+      </div>
+      <div class="form-group">
+        <label>Повторите пароль</label>
+        <input type="password" id="authModalRegPass2" placeholder="Ещё раз" autocomplete="new-password">
+      </div>
+      <div class="auth-modal-error" id="authModalRegError"></div>
+      <button type="submit" class="btn btn-primary btn-block">🚀 СОЗДАТЬ АККАУНТ</button>
+    </form>
+  </div>
+</div>
+
+<!-- ===== СКРИПТЫ (правильный порядок) ===== -->
+<script src="js/api.js"></script>
+<script src="js/config.js"></script>
+<script src="js/ranks.js"></script>
+<script src="js/elo.js"></script>
+<script src="js/storage.js"></script>
+<script src="js/notifications.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/auth-modal.js"></script>
+<script src="js/matchmaking.js"></script>
+<script src="js/voting.js"></script>
+<script src="js/map-room.js"></script>
+<script src="js/screenshot.js"></script>
+<script src="js/lobby.js"></script>
+<script src="js/leaderboard.js"></script>
+<script src="js/profile.js"></script>
+<script src="js/online.js"></script>
+<script src="js/pwa.js"></script>
+<script src="js/app.js"></script>
+
+</body>
+</html>
